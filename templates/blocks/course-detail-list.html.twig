@@ -1,0 +1,36 @@
+{# 如果当前是视频播放页，获取当前页面slug参数 #}
+{% if app.request.attributes.get('_route') == 'teebb_content_show' %}
+    {% set currentCourseSlug = app.request.attributes.get('slug') %}
+{% endif %}
+
+{% for content in contents %}
+    <a href="{{ path('teebb_content_show', {slug:content.slug}) }}"
+       class="py-3 list-group-item list-group-item-action
+        {% if currentCourseSlug is defined and currentCourseSlug == content.slug or
+           currentCourseSlug is not defined and loop.first %}active{% endif %}"
+    >
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="title d-flex align-items-center">
+                {{ loop.index|format_number({integer_digit:2}) }}、{{ content.title }}
+            </div>
+            <div class="time-long">
+            <span class="time-icon">
+                <svg width="1.2em" height="1.2em" viewBox="0 0 16 16"
+                     class="bi bi-clock-fill mr-1" fill="currentColor"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                          d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"></path>
+                  </svg>
+            </span>
+                <span class="small-line-height">
+                {% set course_time = get_content_field(content, 'content', 'course_video_time') %}
+                    {% if course_time is empty or course_time[0].value == null %}
+                        时长正在统计
+                    {% else %}
+                        {{ course_time[0].value }}
+                    {% endif %}
+            </span>
+            </div>
+        </div>
+    </a>
+{% endfor %}

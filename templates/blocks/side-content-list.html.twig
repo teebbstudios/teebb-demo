@@ -1,0 +1,30 @@
+{% for content in contents %}
+    <div class="bg-light p-3 mb-3">
+        <div class="row row-0">
+            <div class="col-4">
+                {% set imageFields = get_specify_type_field(content,'content', content.typeAlias, 'referenceImage') %}
+                {% for imageFieldData in imageFields %}
+                    {% if loop.first %}
+                        {% if imageFieldData[0].value %}
+                            <a href="{{ path('teebb_content_show', {slug: content.slug}) }}">
+                                {% set imagePath = imageFieldData[0].value.filePath %}
+                                <img src={{ imagePath|imagine_filter('courses_image') }} alt="{{ content.title }}">
+                            </a>
+                        {% else %}
+                            <div class="ratio ratio-16x9">
+                                <div class="skeleton-image"></div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-8">
+                <div class="card-body">
+                    <a href="{{ path('teebb_content_show',{slug:content.slug}) }}" class="text-dark">
+                        <h4>{{ content.title }}</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

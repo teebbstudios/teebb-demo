@@ -1,0 +1,11 @@
+{% extends 'simple-base.html.twig' %}
+
+{% block body %}
+    {{ sonata_block_render({type:'teebb.core.block.contents'}, {
+        limit: 5,
+        order: {createdAt: 'DESC'},
+        criteria: {typeAlias: 'article'}
+    }) }}
+{% endblock %}
+
+

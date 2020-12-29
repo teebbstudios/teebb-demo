@@ -1,0 +1,33 @@
+<section id="fixedContact" class="position-fixed" style="right:0;top: 35%;z-index: 999;">
+    <div class="contact-button card rounded-0 rounded-left vertical-write bg-dark p-2 py-2">
+        <div class="text-white d-flex justify-content-center">
+            <svg width="1rem" height="1rem" viewBox="0 0 16 16" class="bi text-white bi-telephone-fill"
+                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M2.267.98a1.636 1.636 0 0 1 2.448.152l1.681 2.162c.309.396.418.913.296 1.4l-.513 2.053a.636.636 0 0 0 .167.604L8.65 9.654a.636.636 0 0 0 .604.167l2.052-.513a1.636 1.636 0 0 1 1.401.296l2.162 1.681c.777.604.849 1.753.153 2.448l-.97.97c-.693.693-1.73.998-2.697.658a17.47 17.47 0 0 1-6.571-4.144A17.47 17.47 0 0 1 .639 4.646c-.34-.967-.035-2.004.658-2.698l.97-.969z"/>
+            </svg>
+            <span class="mt-2 lh-1">
+                    联系我们
+                </span>
+        </div>
+    </div>
+    <div class="contact-info shadow card mr-3 bg-light p-3 position-relative" style="display: none;">
+        <div class="qrcode text-center">
+            <img src="{{ asset('teebb_com/assets/images/qrcode.jpg') }}" width="120px" alt="洛阳至文信息技术有限公司">
+        </div>
+        <div class="address mt-4">
+            <h5 class="text-dark">固定电话：<a href="tel:037966933206" class="text-teebb">0379-66933206</a></h5>
+            <h5 class="text-dark">QQ交流群：<a href="#" class="text-teebb">250820754</a></h5>
+            <h5 class="text-dark">手机/微信：<a href="tel:13938834243" class="text-teebb">13938834243</a></h5>
+            <h5 class="text-dark">电子邮件：<a href="mailto:contact@teebb.com" class="text-teebb">contact@teebb.com</a></h5>
+        </div>
+        <div class="close-info position-absolute" style="right: 5px; top: -25px;">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                 stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M10 10l4 4m0 -4l-4 4"/>
+            </svg>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% import '@TeebbCore/macros.html.twig' as macro %}
+
+{% block title %}
+    {{ subject.title }} - {{ parent() }}
+{% endblock %}
+
+{% block extra_styles %}
+    {# 添加videojs #}
+    <link href="{{ asset(teebb_core.templateRegistry.extraLibrary('highlight').css_path) }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block banner_content %}
+
+    <div class="container">
+        <div class="row pt-4 pt-md-5 justify-content-center">
+            <div class="bg-white border-0 rounded-5">
+                <div class="row">
+                    <div class="d-none d-md-block col-md-2 text-center py-5">
+                        <time datetime="{{ subject.createdAt|date('Y-m-d H:i:s') }}">
+                            <span class="second-title mb-0 text-secondary font-weight-bold d-block">{{ subject.createdAt|date('m/d') }}</span>
+                            <span class="text-secondary d-block">{{ subject.createdAt|date('Y') }}</span>
+                        </time>
+                        {% if subject.boolTop %}
+                            <span class="badge bg-red small">TOP</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-10 pr-md-5 p-2 p-md-4">
+                        <div class="author-category py-3 d-flex align-items-center">
+                            <div class="author mr-3">
+                                <a href="#" class="d-flex align-items-center text-secondary p-0">
+                                    {{ macro.getAvatar(subject.author, 'shadow-sm avatar-sm rounded-circle mr-2') }}
+                                    By {{ subject.author.firstName ~ subject.author.lastName }}
+                                </a>
+                            </div>
+
+                            <div class="blog-time d-md-none mr-3">
+                                {% if subject.boolTop %}
+                                    <span class="badge bg-red small">TOP</span>
+                                {% endif %}
+                                <span class="text-secondary">{{ subject.createdAt|ago }}</span>
+                            </div>
+
+                        </div>
+
+                        <h1 class="second-title mb-0 text-black">
+                            {{ subject.title }}
+                        </h1>
+
+                        <div class="blog-content pt-4 col-md-10">
+                            <div class="col-12">
+                                {{ macro.showContentAllFieldsData(subject, entity_type.bundle, subject.typeAlias ) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    {# 更多内容 #}
+    <section id="relationBlogs">
+        <div class="container">
+            <div class="row py-4">
+                <h3 class="second-title text-center">更多文章</h3>
+            </div>
+            <div class="row pb-5">
+                {{ sonata_block_render({type:'teebb.core.block.contents'}, {
+                    limit: 3,
+                    order: {createdAt: 'DESC'},
+                    criteria: {typeAlias: subject.typeAlias},
+                    exclude: {id: subject.id},
+                    template: 'blocks/more_content.html.twig'
+                }) }}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block extra_javascripts %}
+    <script src="{{ asset(teebb_core.templateRegistry.extraLibrary('highlight').js_path) }}"></script>
+
+{% endblock %}

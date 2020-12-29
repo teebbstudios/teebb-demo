@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% import '@TeebbCore/macros.html.twig' as macro %}
+
+{% set bundle = entity_type.bundle %}
+
+{% block seo %}
+    <meta name="keywords" content="TEEBB, PHP内容管理系统, {{ type.label }}">
+    <meta name="description" content="{{ type.label }} - {{ type.description }}。">
+    <meta name="author" content="洛阳至文信息技术有限公司">
+{% endblock %}
+
+{% block title %}
+    {{ type.label }} - {{ parent() }}
+{% endblock %}
+
+{% block list_page_title %}
+    <section id="topTitle" class="bg-light">
+        <div class="container text-center">
+            <div class="row pt-4">
+                <div class="col-12">
+                    <h1 class="font-weight-bold normal-title text-muted">
+                        {{ type.label }}
+                    </h1>
+                </div>
+            </div>
+            <div class="row pb-4">
+                <div class="col-12">
+                    <p class="lead text-muted font-weight-normal">
+                        “不作恶 爱成长”
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block banner_content %}
+    {% set firstContent = paginator.iterator[0] ?? null %}
+    {% set pager = app.request.get('page', null) %}
+    {# 如果是第一页显示置顶内容 #}
+    {% if pager == null or pager == 1 %}
+        {# 如果第一项内容置顶标记为真 #}
+        {% if firstContent and firstContent.boolTop %}
+            {% set boolShowTop= true %}
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-4 pt-5 pb-md-5">
+                        <div class="top-blog-title">
+                            <div class="top-blog-info d-flex">
+                                <div class="blog-time mr-4">
+                                    {% if firstContent.boolTop %}
+                                        <span class="badge bg-red small">TOP</span>
+                                    {% endif %}
+                                    <span class="small text-white-50">{{ firstContent.createdAt|ago }}</span>
+                                </div>
+
+                                <div class="blog-cate">
+                                    {% set tagsFields = entity_type.specifyTypeFieldData(firstContent, firstContent.typeAlias, 'referenceTaxonomy') %}
+                                    {% for tagsField in tagsFields %}
+                                        {% for tag in tagsField %}
+                                            {% if tag.value %}
+                                                <a href="{{ path('teebb_taxonomy_contents',{slug:tag.value.slug }) }}"
+                                                   class="teebb-bg text-white-50 small">{{ tag.value.term }}</a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                            <h2 class="second-title"><a
+                                        href="{{ path('teebb_content_show', {slug: firstContent.slug}) }}"
+                                        class="text-light">{{ firstContent.title }}</a>
+                            </h2>
+                            <a href="#" class="nav-link d-flex lh-1 text-reset p-0">
+                                {{ macro.getAvatar(firstContent.author, 'avatar-sm shadow-sm rounded-circle mr-2') }}
+                                <div class="pl-2">
+                                    <div class="text-white-50">{{ firstContent.author.firstName ~ firstContent.author.lastName }}</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="py-5">
+                            {% set imageFields = entity_type.specifyTypeFieldData(firstContent, firstContent.typeAlias, 'referenceImage') %}
+                            {% for imageFieldData in imageFields %}
+                                {% if loop.first %}
+                                    {% if imageFieldData[0].value %}
+                                        <a href="{{ path('teebb_content_show', {slug: firstContent.slug}) }}">
+                                            {% set imagePath = imageFieldData[0].value.filePath %}
+                                            <img src={{ imagePath|imagine_filter('blog_poster') }} alt="{{ firstContent.title }}">
+                                        </a>
+                                    {% else %}
+                                        <div class="ratio ratio-16x9">
+                                            <div class="skeleton-image"></div>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endfor %}
+                            <div class="summary">
+                                <p class="lead text-white-50 pt-4 mb-0">
+                                    {{ macro.getContentSummary(firstContent, 'content', firstContent.typeAlias) }}
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block content %}
+    <section id="blogList">
+        <div class="container">
+            <div class="row py-5 justify-content-between">
+                <div class="col-md-8 pr-lg-4">
+                    {% include 'front_pages/blog_list.html.twig' with _context %}
+                </div>
+
+                <div class="col-md-4 pl-lg-4">
+                    {% include 'front_pages/side.html.twig' with _context %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

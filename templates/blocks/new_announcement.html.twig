@@ -1,0 +1,6 @@
+{# 最新公告block #}
+{% for content in contents %}
+    <a href="{{ path('teebb_content_show', {slug: content.slug}) }}" class="text-muted small">
+        <span class="badge bg-danger mr-2">{{ 'NEW!'|trans }}</span> {{ content.title }}
+    </a>
+{% endfor %}

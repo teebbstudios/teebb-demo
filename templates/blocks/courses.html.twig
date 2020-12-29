@@ -1,0 +1,24 @@
+{# 视频教程一级分类block #}
+{% for taxonomy in contents %}
+    <div class="col-md-6 col-lg-4 pb-4">
+        <div class="card border-0 shadow-sm course-card">
+            <div class="course-img overflow-hidden">
+                {% set imageField = get_content_field(taxonomy, 'taxonomy', 'course_track_poster') %}
+                <a href="{{ path('courses-list', {slug: taxonomy.slug}) }}">
+                    {% if imageField is empty or imageField[0].value == null %}
+                        <div class="ratio ratio-16x9">
+                            <div class="skeleton-image"></div>
+                        </div>
+                    {% else %}
+                        {% set imagePath = imageField[0].value.filePath %}
+                        <img src={{ imagePath|imagine_filter('courses_image') }} alt="{{ taxonomy.term }}">
+                    {% endif %}
+                </a>
+            </div>
+            <div class="card-body text-left">
+                <a href="{{ path('courses-list', {slug: taxonomy.slug}) }}" class="text-dark h2">{{ taxonomy.term }}</a>
+                <p class="card-text text-black-50">{{ taxonomy.description }}</p>
+            </div>
+        </div>
+    </div>
+{% endfor %}

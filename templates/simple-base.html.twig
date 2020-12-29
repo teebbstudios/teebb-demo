@@ -23,42 +23,12 @@
 
 <body>
 
-{% include 'header.html.twig' %}
 
 {% block body %}
-    {# 页面顶部面包屑或banner背景图 #}
-    {% block top_area %}
-        {% block breadcrumb %}
-        {% endblock %}
-        {% block list_page_title %}
-        {% endblock %}
-        {% block common_banner %}
-            <section id="commonBanner" class="common-banner">
-                {% block banner_content %}
-                {% endblock %}
-                <svg class="bg-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                     width="1920px"
-                     height="1080px" viewBox="0 0 1920 1080">
-                    <image id="bg" width="1920" height="1080"
-                           xlink:href="{{ asset('teebb_com/assets/images/bg-svg.png') }}"/>
-                </svg>
-            </section>
-        {% endblock %}
-    {% endblock %}
-
-    {% block flash_messages %}
-        {% include 'flash_messages.html.twig' %}
-    {% endblock %}
-
-    {# 页面内容区 #}
-    {% block content %}
-    {% endblock %}
 
 {% endblock %}
 
-{% include 'float_contact.html.twig' %}
 
-{% include 'footer.html.twig' %}
 
 {% block javascripts %}
     <!-- jquery core JavaScript -->

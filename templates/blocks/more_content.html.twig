@@ -1,0 +1,59 @@
+{% import '@TeebbCore/macros.html.twig' as macro %}
+{% for content in contents %}
+    <div class="col-md-4">
+        <div class="card">
+            {% set imageFields = get_specify_type_field(content,'content', content.typeAlias, 'referenceImage') %}
+            <div class="poster">
+                {% for imageFieldData in imageFields %}
+                    {% if loop.first %}
+                        {% if imageFieldData[0].value %}
+                            <a href="{{ path('teebb_content_show', {slug: content.slug}) }}">
+                                {% set imagePath = imageFieldData[0].value.filePath %}
+                                <img src={{ imagePath|imagine_filter('blog_poster') }} alt="{{ content.title }}">
+                            </a>
+                        {% else %}
+                            <div class="ratio ratio-16x9">
+                                <div class="skeleton-image"></div>
+                            </div>
+
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="card-body">
+                <h2 class="h4 mb-0">
+                    <a href="{{ path('teebb_content_show',{slug:content.slug}) }}"
+                       class="text-black">{{ content.title }}</a>
+                </h2>
+                <div class="author-category py-3 d-flex align-items-center">
+                    <div class="blog-time mr-3">
+                        <span class="text-secondary">{{ content.createdAt|date('Y-m-d') }}</span>
+                    </div>
+                    <div class="author mr-3">
+                        <a href="#" class="d-flex align-items-center text-secondary p-0">
+                            {{ content.author.firstName ~ content.author.lastName }}
+                        </a>
+                    </div>
+                    {% set tagsFields = get_specify_type_field(content,'content', content.typeAlias, 'referenceTaxonomy') %}
+                    <div class="blog-cate mr-3">
+                        {% for tagsField in tagsFields %}
+                            {% for tag in tagsField %}
+                                {% if tag.value %}
+                                    <a href="{{ path('teebb_taxonomy_contents',{slug:tag.value.slug }) }}"
+                                       class="teebb-bg text-secondary badge bg-light small">{{ tag.value.term }}</a>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+
+                </div>
+                <p class="small">
+                    {{ macro.getContentSummary(content, 'content', content.typeAlias) }}
+                </p>
+            </div>
+        </div>
+    </div>
+{% else %}
+    {{ 'It is empty.'|trans }}
+{% endfor %}

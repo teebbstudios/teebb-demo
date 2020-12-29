@@ -1,0 +1,9 @@
+<div class="list-group list-group-flush">
+    {% for taxonomy in contents %}
+        <a href="{{ path('teebb_taxonomy_contents',{slug:taxonomy.slug }) }}"
+           class="list-group-item list-group-item-action py-3 h4 mb-0 {% if app.request.get('_route') == 'teebb_taxonomy_contents' and
+               app.request.get('slug') == taxonomy.slug %}active {% endif %}">
+            {{ taxonomy.term }}
+        </a>
+    {% endfor %}
+</div>

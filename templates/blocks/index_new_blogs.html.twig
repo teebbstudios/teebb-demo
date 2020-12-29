@@ -1,0 +1,22 @@
+{% import '@TeebbCore/macros.html.twig' as macro %}
+
+{% for content in contents %}
+    <div class="col-md-6 py-2 py-lg-4">
+        <div class="card">
+            <div class="card-status-left bg-primary"></div>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <a href="{{ path('teebb_content_show',{slug:content.slug}) }}"
+                       class="">{{ content.title }}</a>
+                </h4>
+                <p class="lead text-muted small">
+                    {{ macro.getContentSummary(content, 'content', content.typeAlias) }}
+                </p>
+                <div class="d-flex justify-content-between">
+                    <span class="text-muted">{{ content.createdAt|date('Y-m-d') }}</span>
+                    <a href="{{ path('teebb_content_show',{slug:content.slug}) }}" class="">阅读更多</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}

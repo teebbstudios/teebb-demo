@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TEEBB演示站 - {{ parent() }}{% endblock %}
+
+{% block banner_content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="mt-3 mt-md-5">
+                <h1 class="font-weight-bold mt-4 banner-title text-white">
+                    TEEBB演示网站
+                </h1>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="mt-3">
+                <p class="lead text-white font-weight-normal">
+                    演示站前台展示：常用的TWIG方法及区块（Block）的使用
+                </p>
+                <p class="lead text-white font-weight-normal">
+                    演示站后台地址：<a class="text-danger text-decoration-underline" href="{{ path('teebb_dashboard') }}" target="_blank">TEEBB控制台</a>
+                </p>
+                <p class="lead text-white font-weight-normal">
+                    演示站后台账号/密码：<span class="text-danger text-decoration-underline">admin/admin</span>
+                </p>
+                <p class="lead text-white font-weight-normal">
+                    本演示站数据每24小时恢复一次！
+                </p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="mt-3 mb-5">
+                <h3 class="font-weight-bold mb-4 text-white">
+                    本站已公安网备案，仅供学习使用，请勿违法及违规黑客操作，否则将追究司法责任！！！
+                </h3>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'knp_menu.html.twig' %}
+
+{% block list %}
+    {% if item.hasChildren and options.depth is not same as(0) and item.displayChildren %}
+        {% import _self as knp_menu %}
+        <ul class="navbar-nav">
+            {{ block('children') }}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block item %}
+    {% set hasChildren = item.hasChildren %}
+    {% if hasChildren %}
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button"
+               aria-expanded="false">
+                {{ block('label') }}
+            </a>
+            {% set children = item.children %}
+            <div class="dropdown-menu dropdown-menu-arrow p-3"
+                 style="min-width: 16rem;">
+                <ul class="list-group list-group-flush">
+                    {% for child in children %}
+                        <li class="list-group-item dropdown-item">
+                            <a class="text-muted w-100" href="{{ child.uri }}">
+                                    <span class="font-weight-bold">
+                                        {{ child.label }}
+                                    </span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </li>
+    {% else %}
+        {% set isDemoItem = 'DEMO' in item.label or 'demo' in item.label %}
+        <li class="nav-item {% if isDemoItem %}px-md-0{% endif %}"
+            {% if isDemoItem %}style="padding: 0 1.5rem;"{% endif %}>
+            <a class="{% if isDemoItem %}btn btn-primary small{% else %}nav-link{% endif %}"
+               href="{{ item.uri }}">
+                {% if isDemoItem %}
+                    <small>{{ block('label') }}</small>{% else %}{{ block('label') }}
+                {% endif %}
+            </a>
+        </li>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% import '@TeebbCore/macros.html.twig' as macro %}
+
+{% set bundle = entity_type.bundle %}
+{% set slug = app.request.get('slug') %}
+
+{% set isCasePage = taxonomy.taxonomyType == 'cases_category' %}
+
+{% block seo %}
+    <meta name="keywords" content="TEEBB, PHP内容管理系统, {{ taxonomy.term }}">
+    <meta name="description" content="{{ taxonomy.term }} - {{ taxonomy.description }}。">
+    <meta name="author" content="洛阳至文信息技术有限公司">
+{% endblock %}
+
+{% block title %}
+    {{ taxonomy.term }}{% if isCasePage %}案例{% endif %} - {{ parent() }}
+{% endblock %}
+
+{% block list_page_title %}
+    {% if isCasePage == false %}
+        <section id="topTitle" class="bg-light">
+            <div class="container text-center">
+                <div class="row pt-4">
+                    <div class="col-12">
+                        <h1 class="font-weight-bold normal-title text-muted">
+                            {{ taxonomy.term }}
+                        </h1>
+                    </div>
+                </div>
+                <div class="row pb-4">
+                    <div class="col-12">
+                        <p class="lead text-muted font-weight-normal">
+                            “不作恶 爱成长”
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}
+
+{% block banner_content %}
+    {% if isCasePage %}
+        {% include 'front_pages/case_banner.html.twig' %}
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    {% if isCasePage %}
+        {% include 'front_pages/case_list.html.twig' with _context %}
+    {% else %}
+        <section id="blogList">
+            <div class="container">
+                <div class="row py-5 justify-content-between">
+                    <div class="col-md-8 pr-lg-4">
+                        {% include 'front_pages/blog_list.html.twig' with _context %}
+                    </div>
+
+                    <div class="col-md-4 pl-lg-4">
+                        {% include 'front_pages/side.html.twig' with _context %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

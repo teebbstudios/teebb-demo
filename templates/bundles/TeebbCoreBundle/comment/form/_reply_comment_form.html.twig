@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% import '@TeebbCore/macros.html.twig' as macro %}
+
+{% block title %}
+    回复评论：{{ comment.subject }} - {{ parent() }}
+{% endblock %}
+
+{% block content %}
+
+    <section id="replayComment" class="container py-4">
+        <div class="row">
+            <div class="card p-4">
+                <div class="comment mb-4">
+                    <h3 class="pb-3 mb-0 border-bottom">{{ 'comment'|trans }}</h3>
+                    <div id="comment_{{ comment.id }}" class="comment px-3 py-2 border-bottom">
+                        {{ macro.commentItemShow(entity_type, comment) }}
+                    </div>
+                </div>
+                <div class="reply-comment my-3">
+                    <h3>{{ action|trans }}</h3>
+                    {{ form(comment_form) }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

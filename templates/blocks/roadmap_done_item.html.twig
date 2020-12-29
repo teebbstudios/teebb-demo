@@ -1,0 +1,13 @@
+{% for content in contents %}
+    <div class="card my-3">
+        <div class="card-body">
+            <h3 class="card-title">{{ content.title }}</h3>
+            <div class="text-gray small">
+                {% set roadmapBody = get_content_field(content, 'content', 'roadmap_description') %}
+                {% if roadmapBody is not empty and roadmapBody[0].value %}
+                    {{ roadmapBody[0].value|raw }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}

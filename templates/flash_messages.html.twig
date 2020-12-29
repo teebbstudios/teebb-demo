@@ -1,0 +1,24 @@
+{% set danger_icon = '<svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>' %}
+{% set success_icon = '<svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 12l5 5l10 -10"></path></svg>' %}
+{% set info_icon = '<svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="8" x2="12.01" y2="8"></line><polyline points="11 12 12 12 12 16 13 16"></polyline></svg>' %}
+{% set warning_icon = '<svg xmlns="http://www.w3.org/2000/svg" class="icon me-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 9v2m0 4v.01"></path><path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path></svg>' %}
+
+{% for label, messages in app.flashes(['success','warning','info','danger']) %}
+    {% for message in messages %}
+        <div class="container pt-4">
+            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                {% if label == 'success' %}
+                    {{ success_icon|raw }}
+                {% elseif label == 'warning' %}
+                    {{ warning_icon|raw }}
+                {% elseif label == 'info' %}
+                    {{ info_icon|raw }}
+                {% elseif label == 'danger' %}
+                    {{ danger_icon|raw }}
+                {% endif %}
+                <span class="small text-muted">{{ message |raw }}</span>
+                <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+            </div>
+        </div>
+    {% endfor %}
+{% endfor %}

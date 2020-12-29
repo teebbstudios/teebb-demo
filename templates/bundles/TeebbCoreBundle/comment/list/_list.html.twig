@@ -1,0 +1,20 @@
+{% import '@TeebbCore/macros.html.twig' as macro %}
+
+<div class="comments-wrapper mt-3 mb-4">
+    {% for comment in comments %}
+        <div id="comment_{{ comment.id }}"
+             class="comment px-3 py-2 border-bottom">
+            {{ macro.commentItemShow(entity_type, comment, redirectBackURI, allowReply) }}
+            {% for children in commentRepo.children(comment) %}
+                {#子评论中只有已通过审核的评论会显示#}
+                {% if children.commentStatus == 2 %}
+                    {% set marginLeft = 50 * children.lvl %}
+                    <div id="comment_{{ children.id }}" class="comment px-3 py-2 border-top"
+                         style="margin-left: {{ marginLeft ~ 'px' }}">
+                        {{ macro.commentItemShow(entity_type, children, redirectBackURI, allowReply) }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
