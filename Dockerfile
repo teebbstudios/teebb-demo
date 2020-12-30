@@ -35,7 +35,7 @@ RUN wget https://getcomposer.org/download/2.0.8/composer.phar \
 RUN a2enmod rewrite
 RUN a2enmod headers
 
-COPY ./composer.lock ./composer.json /webroot/
+COPY ./composer.json /webroot/
 RUN php /usr/bin/composer install --prefer-dist --no-autoloader --no-scripts --no-dev
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs 
