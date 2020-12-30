@@ -51,7 +51,7 @@ RUN gulp build
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 RUN cp .env.docker .env.local \
-    && php /usr/bin/composer dump-autoload --optimize \
+    && php /usr/bin/composer update --optimize \
     && chown www-data:www-data -R ./ \
     && php bin/console ckeditor:install \
     && php bin/console assets:install public --symlink
