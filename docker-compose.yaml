@@ -3,17 +3,14 @@ version: "3.8"
 networks:
     backend:
 volumes:
-    app_volume:
     db_volume:
 services:
     teebb_demo:
         build: .
-        container_name: teebb_demo
         restart: always
         ports:
             - "8080:80"
         volumes:
-            - app_volume:/wwwroot
             - .:/webroot
         depends_on:
             - teebb_db
@@ -23,7 +20,7 @@ services:
         image: mysql:5.7
         volumes:
             - db_volume:/var/lib/mysql
-            - ./mysql_data:/docker-entrypoint-initdb.d
+            - ./mysql_data:/mysql_data
         restart: always
         ports:
             - "8806:3306"

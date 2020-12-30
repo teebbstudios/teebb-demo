@@ -12,15 +12,15 @@ RUN echo "memory_limit=512M" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
 
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
 RUN { \
-        echo '# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释' \
-        echo 'deb http://mirrors.cloud.tencent.com/debian/ buster main non-free contrib' \
-        echo '# deb-src http://mirrors.cloud.tencent.com/debian/ buster main non-free contrib' \
-        echo 'deb http://mirrors.cloud.tencent.com/debian-security buster/updates main' \
-        echo '# deb-src http://mirrors.cloud.tencent.com/debian-security buster/updates main' \
-        echo 'deb http://mirrors.cloud.tencent.com/debian/ buster-updates main non-free contrib' \
-        echo '# deb-src http://mirrors.cloud.tencent.com/debian/ buster-updates main non-free contrib' \
-        echo 'deb http://mirrors.cloud.tencent.com/debian/ buster-backports main non-free contrib' \
-        echo '# deb-src http://mirrors.cloud.tencent.com/debian/ buster-backports main non-free contrib' \
+        echo '# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释'; \
+        echo 'deb http://mirrors.cloud.tencent.com/debian/ buster main non-free contrib'; \
+        echo '# deb-src http://mirrors.cloud.tencent.com/debian/ buster main non-free contrib'; \
+        echo 'deb http://mirrors.cloud.tencent.com/debian-security buster/updates main'; \
+        echo '# deb-src http://mirrors.cloud.tencent.com/debian-security buster/updates main'; \
+        echo 'deb http://mirrors.cloud.tencent.com/debian/ buster-updates main non-free contrib'; \
+        echo '# deb-src http://mirrors.cloud.tencent.com/debian/ buster-updates main non-free contrib'; \
+        echo 'deb http://mirrors.cloud.tencent.com/debian/ buster-backports main non-free contrib'; \
+        echo '# deb-src http://mirrors.cloud.tencent.com/debian/ buster-backports main non-free contrib'; \
     } > /etc/apt/sources.list
 
 RUN apt-get update && apt-get install -y \
@@ -63,8 +63,8 @@ RUN gulp build
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-RUN cp .env.docker .env.local \
+RUN cp .env.docker /webroot/.env.local \
     && php /usr/bin/composer dump-autoload \
-    && chown www-data:www-data -R ./ \
     && php bin/console ckeditor:install \
-    && php bin/console assets:install public --symlink
+    && php bin/console assets:install public --symlink\
+    && chown www-data:www-data -R ./
