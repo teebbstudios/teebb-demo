@@ -36,7 +36,7 @@ RUN a2enmod rewrite
 RUN a2enmod headers
 
 COPY ./composer.json /webroot/
-RUN php /usr/bin/composer install --prefer-dist --no-autoloader --no-scripts --no-dev
+RUN php /usr/bin/composer install --prefer-dist --no-autoloader --no-scripts
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs 
 RUN npm config set registry https://registry.npm.taobao.org
