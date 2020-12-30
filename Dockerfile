@@ -44,9 +44,9 @@ RUN npm install --global gulp-cli
 
 COPY ./package.json /webroot/
 RUN npm install
-RUN gulp build
 
 COPY ./ /webroot
+RUN gulp build
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
