@@ -31,3 +31,5 @@ services:
             MYSQL_PASSWORD: teebbcom
         networks:
             - backend
+        entrypoint:
+            - mysql < /mysql_data/teebb_demo.sql
