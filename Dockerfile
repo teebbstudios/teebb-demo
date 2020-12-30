@@ -16,18 +16,16 @@ RUN apt-get update && apt-get install -y \
         libmcrypt-dev \
         libpng-dev \
         libzip-dev \
-        libldap-dev \
         wget \
         curl \
         git \
-        subversion \
         zip \
         unzip \
-        mercurial \
         --no-install-recommends && rm -r /var/lib/apt/lists/* \
-    && docker-php-ext-install -j$(nproc) pcntl exif pdo_mysql zip ldap \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) pcntl exif pdo_mysql zip \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
+
 RUN wget https://getcomposer.org/download/2.0.8/composer.phar \
     && mv composer.phar /usr/bin/composer.phar \
     && chmod +x /usr/bin/composer.phar \
@@ -40,13 +38,15 @@ RUN a2enmod headers
 COPY ./composer.lock ./composer.json /webroot/
 RUN php /usr/bin/composer install --prefer-dist --no-autoloader --no-scripts --no-dev
 
-COPY ./ /webroot
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs 
+RUN npm config set registry https://registry.npm.taobao.org
+RUN npm install --global gulp-cli
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-    && apt-get install -y nodejs
-    && npm install --global gulp-cli
-    && npm install
-    && gulp build
+COPY ./package.json /webroot/
+RUN npm install
+RUN gulp build
+
+COPY ./ /webroot
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
