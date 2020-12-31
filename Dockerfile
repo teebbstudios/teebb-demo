@@ -48,23 +48,8 @@ RUN wget https://getcomposer.org/download/2.0.8/composer.phar \
 RUN a2enmod rewrite
 RUN a2enmod headers
 
-COPY ./composer.json /webroot/
-RUN php /usr/bin/composer install --prefer-dist --no-autoloader --no-scripts
-
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs 
-RUN npm config set registry https://registry.npm.taobao.org
-RUN npm install --global gulp-cli
-
-COPY ./package.json /webroot/
-RUN npm install
-
-COPY ./ /webroot
-RUN gulp build
-
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-RUN cp .env.docker .env.local \
-    && php /usr/bin/composer dump-autoload \
-    && php bin/console ckeditor:install \
-    && php bin/console assets:install public --symlink \
-    && chown www-data:www-data -R ./
+COPY ./public /public
+
+RUN mv /public /webroot
