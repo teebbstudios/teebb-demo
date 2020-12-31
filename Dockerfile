@@ -39,15 +39,11 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 
-RUN wget https://getcomposer.org/download/2.0.8/composer.phar \
-    && mv composer.phar /usr/bin/composer.phar \
-    && chmod +x /usr/bin/composer.phar \
-    && ln -s /usr/bin/composer.phar /usr/bin/composer \
-    && php /usr/bin/composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
-
 RUN a2enmod rewrite
 RUN a2enmod headers
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 COPY ./ /webroot
+
+RUN mv .env.docker .env.local

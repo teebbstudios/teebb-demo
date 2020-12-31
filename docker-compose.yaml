@@ -4,14 +4,16 @@ networks:
     backend:
 volumes:
     db_volume:
+    app_volume:
 services:
     teebb_demo:
         build: .
         restart: always
+        container_name: teebb_demo
         ports:
             - "8080:80"
         volumes:
-            - .:/webroot
+            - app_volume:/webroot
         depends_on:
             - teebb_db
         networks:
@@ -19,6 +21,7 @@ services:
 
     teebb_db:
         image: mysql:5.7
+        container_name: teebb_db
         volumes:
             - ./mysql_data:/docker-entrypoint-initdb.d
             - db_volume:/var/lib/mysql
