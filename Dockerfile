@@ -50,6 +50,4 @@ RUN a2enmod headers
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-COPY ./public /public
-
-RUN mv /public /webroot
+COPY ./ /webroot
