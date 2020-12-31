@@ -4,7 +4,7 @@ WORKDIR /webroot
 ENV APACHE_DOCUMENT_ROOT /webroot/public
 
 RUN echo "memory_limit=512M" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
-    && echo "date.timezone=${PHP_TIMEZONE:-UTC}" > "$PHP_INI_DIR/conf.d/date_timezone.ini" \
+    && echo "date.timezone=Asia/Shanghai" > "$PHP_INI_DIR/conf.d/date_timezone.ini" \
     && echo "upload_max_filesize = 2M\npost_max_size = 2M" > "$PHP_INI_DIR/conf.d/upload-limit.ini"
 
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
