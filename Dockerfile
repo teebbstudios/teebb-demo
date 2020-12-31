@@ -41,6 +41,26 @@ RUN a2enmod headers
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
+RUN wget https://mirrors.aliyun.com/composer/composer.phar \
+    && mv composer.phar /usr/bin/composer.phar \
+    && chmod +x /usr/bin/composer.phar \
+    && ln -s /usr/bin/composer.phar /usr/bin/composer \
+    && php /usr/bin/composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
+
 COPY ./ /webroot
 
-RUN mv .env.docker .env.local
+RUN php /usr/bin/composer install --prefer-dist --no-autoloader --no-scripts
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs
+RUN npm config set registry https://registry.npm.taobao.org
+RUN npm install --global gulp-cli
+
+RUN npm install
+
+RUN gulp build
+
+RUN mv .env.docker .env.local \
+    && php /usr/bin/composer dump-autoload \
+    && php bin/console ckeditor:install \
+    && php bin/console assets:install public --symlink \
+    && chown www-data:www-data -R ./
