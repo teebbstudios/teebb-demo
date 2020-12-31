@@ -14,6 +14,7 @@ services:
             - "8080:80"
         volumes:
             - app_volume:/webroot
+            - ./docker-compose/teebb_demo.conf:/etc/apache2/sites-available/000-default.conf
         depends_on:
             - teebb_db
         networks:
