@@ -59,8 +59,9 @@ RUN npm install
 
 RUN gulp build
 
-RUN mv .env.docker .env.local \
-    && php /usr/bin/composer dump-autoload \
+RUN mv .env.docker .env.local
+
+RUN php /usr/bin/composer dump-autoload \
     && php bin/console ckeditor:install \
     && php bin/console assets:install public --symlink \
-    && chown www-data:www-data -R ./
+    && chown www-data:www-data -R /webroot
