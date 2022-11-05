@@ -2,9 +2,6 @@
     "title": "SB Admin 2",
     "name": "startbootstrap-sb-admin-2",
     "version": "4.0.4",
-    "scripts": {
-        "postinstall": "npm install fabric@1.7.22 --no-optional"
-    },
     "description": "An open source Bootstrap 4 admin theme.",
     "keywords": [
         "css",
@@ -38,7 +35,6 @@
         "chart.js": "^2.8.0",
         "datatables.net-bs4": "^1.10.19",
         "dropzone": "^5.5.1",
-        "fabric": "^1.7.22",
         "file-saver": "^2.0.2",
         "jquery": "^3.5.1",
         "nestable": "^0.2.0",

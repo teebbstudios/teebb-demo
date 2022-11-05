@@ -52,7 +52,7 @@ COPY ./ /webroot
 RUN php /usr/bin/composer install --prefer-dist --no-autoloader --no-scripts
 
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && apt-get install -y nodejs
-RUN npm config set registry https://registry.npm.taobao.org
+RUN npm config set registry https://registry.npmmirror.com
 RUN npm install --global gulp-cli
 
 RUN npm install
